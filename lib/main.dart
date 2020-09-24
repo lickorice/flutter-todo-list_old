@@ -87,6 +87,7 @@ class _TodoListItemState extends State<TodoListItem> {
 
   _TodoListItemState(this.itemTitle, this.removeItem);
 
+  TextEditingController itemTitleController = new TextEditingController();
   bool _checked = false;
   bool _isDeleted = false;
 
@@ -106,6 +107,32 @@ class _TodoListItemState extends State<TodoListItem> {
           Text(itemTitle),
         ],),
         Row(children: <Widget>[
+          FlatButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                child: AlertDialog(
+                  title: Text("Change Item Title"),
+                  content: TextField(
+                    decoration: new InputDecoration(hintText: "Item title"),
+                    controller: itemTitleController,
+                  ),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: Text("SAVE"),
+                      onPressed: () {
+                        setState(() {
+                          itemTitle = itemTitleController.text;
+                        });
+                        Navigator.of(context).pop();
+                      }
+                    )
+                  ],
+                ),
+              );
+            },
+            child: Text("EDIT", style: TextStyle(color: Colors.blue),),
+          ),
           FlatButton(
             onPressed: () {
               setState(() {
