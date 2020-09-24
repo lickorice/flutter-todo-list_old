@@ -24,7 +24,9 @@ class TodoList extends ListView {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-        TodoListItem("Asd"),
+        TodoListItem("Item 1"),
+        TodoListItem("Item 2"),
+        TodoListItem("Item 3"),
       ],
     );
   }
@@ -32,7 +34,6 @@ class TodoList extends ListView {
 
 class TodoListItem extends StatefulWidget {
   final String itemTitle;
-  bool checked = false;
   TodoListItem(this.itemTitle);
 
   @override
@@ -40,16 +41,16 @@ class TodoListItem extends StatefulWidget {
 }
 
 class _TodoListItemState extends State<TodoListItem> {
-  String _title;
-  
+  bool checked = false;
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
         Checkbox(
-          value: widget.checked,
+          value: checked,
           onChanged: (bool value) {setState(() {
-            widget.checked = value;
+            checked = value;
           });},  
         ),
         Text(widget.itemTitle),
