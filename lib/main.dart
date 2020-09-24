@@ -78,12 +78,14 @@ class TodoListItem extends StatefulWidget {
   TodoListItem(this.itemTitle, this.removeItem);
 
   @override
-  _TodoListItemState createState() => _TodoListItemState(removeItem);
+  _TodoListItemState createState() => _TodoListItemState(itemTitle, removeItem);
 }
 
 class _TodoListItemState extends State<TodoListItem> {
   Function(TodoListItem) removeItem;
-  _TodoListItemState(this.removeItem);
+  String itemTitle;
+
+  _TodoListItemState(this.itemTitle, this.removeItem);
 
   bool _checked = false;
   bool _isDeleted = false;
@@ -101,7 +103,7 @@ class _TodoListItemState extends State<TodoListItem> {
               _checked = value;
             });},  
           ),
-          Text(widget.itemTitle),
+          Text(itemTitle),
         ],),
         Row(children: <Widget>[
           FlatButton(
