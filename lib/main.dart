@@ -14,24 +14,37 @@ class TodoList extends StatefulWidget {
 }
 
 class _TodoListState extends State<TodoList> {
-  List <TodoListItem> _todoList = [
-    TodoListItem("Item 1"),
-    TodoListItem("Item 2"),
-    TodoListItem("Item 3"),
-    TodoListItem("Item 4"),
-    TodoListItem("Item 5"),
-  ];
+  List <TodoListItem> _todoList;
+
+  @override
+  void initState() {
+    super.initState();
+    _todoList = [
+      TodoListItem("Item 1", this._removeTodoListItem),
+      TodoListItem("Item 2", this._removeTodoListItem),
+      TodoListItem("Item 3", this._removeTodoListItem),
+      TodoListItem("Item 4", this._removeTodoListItem),
+      TodoListItem("Item 5", this._removeTodoListItem),
+    ];
+  }
 
   void _addTodoListItem() {
     setState(() {
-      _todoList.add(TodoListItem("Item " + (_todoList.length+1).toString()));
+      _todoList.add(TodoListItem("Item " + (_todoList.length+1).toString(), this._removeTodoListItem));
+    });
+  }
+
+  void _removeTodoListItem(item) {
+    setState(() {
+      _todoList.remove(item);
     });
   }
 
   Widget _buildTodoList() {
     return new ListView.builder(
+      itemCount: _todoList.length,
       itemBuilder: (context, index) {
-        if (index < _todoList.length) return _todoList[index];
+        return _todoList[index];
       },
     );
   }
@@ -61,13 +74,17 @@ class _TodoListState extends State<TodoList> {
 
 class TodoListItem extends StatefulWidget {
   final String itemTitle;
-  TodoListItem(this.itemTitle);
+  final Function(TodoListItem) removeItem;
+  TodoListItem(this.itemTitle, this.removeItem);
 
   @override
-  _TodoListItemState createState() => _TodoListItemState();
+  _TodoListItemState createState() => _TodoListItemState(removeItem);
 }
 
 class _TodoListItemState extends State<TodoListItem> {
+  Function(TodoListItem) removeItem;
+  _TodoListItemState(this.removeItem);
+
   bool _checked = false;
   bool _isDeleted = false;
 
@@ -90,7 +107,7 @@ class _TodoListItemState extends State<TodoListItem> {
           FlatButton(
             onPressed: () {
               setState(() {
-                _isDeleted = true;
+                removeItem(widget);
               });
             },
             child: Text("DELETE", style: TextStyle(color: Colors.red),),
