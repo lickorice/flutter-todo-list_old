@@ -5,6 +5,38 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return TodoList();
+  }
+}
+
+class TodoList extends StatefulWidget {
+  _TodoListState createState() => _TodoListState();
+}
+
+class _TodoListState extends State<TodoList> {
+  List <TodoListItem> _todoList = [
+    TodoListItem("Item 1"),
+    TodoListItem("Item 2"),
+    TodoListItem("Item 3"),
+    TodoListItem("Item 4"),
+    TodoListItem("Item 5"),
+  ];
+
+  void _addTodoListItem() {
+    setState(() {
+      _todoList.add(TodoListItem("Item " + (_todoList.length+1).toString()));
+    });
+  }
+
+  Widget _buildTodoList() {
+    return new ListView.builder(itemBuilder: (context, index) {
+      if (index < _todoList.length) return _todoList[index];
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter To-Do List',
       home: Scaffold(
@@ -12,29 +44,16 @@ class MyApp extends StatelessWidget {
           title: Text('Flutter To-Do List'),
         ),
         body: Center(
-          child: TodoList(),
+          child: _buildTodoList(),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            // Code here
+            _addTodoListItem();
           },
           child: Icon(Icons.add),
           backgroundColor: Colors.green,
         ),
       ),
-    );
-  }
-}
-
-class TodoList extends ListView {
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        TodoListItem("Item 1"),
-        TodoListItem("Item 2"),
-        TodoListItem("Item 3"),
-      ],
     );
   }
 }
@@ -48,16 +67,16 @@ class TodoListItem extends StatefulWidget {
 }
 
 class _TodoListItemState extends State<TodoListItem> {
-  bool checked = false;
+  bool _checked = false;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
         Checkbox(
-          value: checked,
+          value: _checked,
           onChanged: (bool value) {setState(() {
-            checked = value;
+            _checked = value;
           });},  
         ),
         Text(widget.itemTitle),
