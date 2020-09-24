@@ -12,9 +12,34 @@ class MyApp extends StatelessWidget {
           title: Text('Flutter To-Do List'),
         ),
         body: Center(
-          child: Text('Hello World'),
+          child: TodoList(),
         ),
       ),
+    );
+  }
+}
+
+class TodoList extends ListView {
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: <Widget>[
+        Container(
+          height: 50,
+          color: Colors.amber[600],
+          child: const Center(child: Text('Entry A')),
+        ),
+        Container(
+          height: 50,
+          color: Colors.amber[500],
+          child: const Center(child: Text('Entry B')),
+        ),
+        Container(
+          height: 50,
+          color: Colors.amber[100],
+          child: const Center(child: Text('Entry C')),
+        ),
+      ],
     );
   }
 }
