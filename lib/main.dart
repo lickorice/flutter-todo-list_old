@@ -35,6 +35,7 @@ class _TodoListState extends State<TodoList> {
   }
 
   void _removeTodoListItem(item) {
+    debugPrint(item.itemTitle);
     setState(() {
       _todoList.remove(item);
     });
@@ -42,6 +43,7 @@ class _TodoListState extends State<TodoList> {
 
   Widget _buildTodoList() {
     return new ListView.builder(
+      key: Key(_todoList.length.toString()),
       itemCount: _todoList.length,
       itemBuilder: (context, index) {
         return _todoList[index];
