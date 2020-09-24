@@ -14,6 +14,13 @@ class MyApp extends StatelessWidget {
         body: Center(
           child: TodoList(),
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            // Code here
+          },
+          child: Icon(Icons.add),
+          backgroundColor: Colors.green,
+        ),
       ),
     );
   }
