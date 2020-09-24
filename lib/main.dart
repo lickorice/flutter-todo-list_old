@@ -24,21 +24,35 @@ class TodoList extends ListView {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-        Container(
-          height: 50,
-          color: Colors.amber[600],
-          child: const Center(child: Text('Entry A')),
+        TodoListItem("Asd"),
+      ],
+    );
+  }
+}
+
+class TodoListItem extends StatefulWidget {
+  final String itemTitle;
+  bool checked = false;
+  TodoListItem(this.itemTitle);
+
+  @override
+  _TodoListItemState createState() => _TodoListItemState();
+}
+
+class _TodoListItemState extends State<TodoListItem> {
+  String _title;
+  
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Checkbox(
+          value: widget.checked,
+          onChanged: (bool value) {setState(() {
+            widget.checked = value;
+          });},  
         ),
-        Container(
-          height: 50,
-          color: Colors.amber[500],
-          child: const Center(child: Text('Entry B')),
-        ),
-        Container(
-          height: 50,
-          color: Colors.amber[100],
-          child: const Center(child: Text('Entry C')),
-        ),
+        Text(widget.itemTitle),
       ],
     );
   }
