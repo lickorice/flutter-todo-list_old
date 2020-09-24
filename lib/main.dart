@@ -29,8 +29,9 @@ class _TodoListState extends State<TodoList> {
   }
 
   Widget _buildTodoList() {
-    return new ListView.builder(itemBuilder: (context, index) {
-      if (index < _todoList.length) return _todoList[index];
+    return new ListView.builder(
+      itemBuilder: (context, index) {
+        if (index < _todoList.length) return _todoList[index];
       },
     );
   }
@@ -68,18 +69,33 @@ class TodoListItem extends StatefulWidget {
 
 class _TodoListItemState extends State<TodoListItem> {
   bool _checked = false;
+  bool _isDeleted = false;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    if (_isDeleted) return Container();
+    else return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Checkbox(
-          value: _checked,
-          onChanged: (bool value) {setState(() {
-            _checked = value;
-          });},  
-        ),
-        Text(widget.itemTitle),
+        Row(children: <Widget>[
+          Checkbox(
+            value: _checked,
+            onChanged: (bool value) {setState(() {
+              _checked = value;
+            });},  
+          ),
+          Text(widget.itemTitle),
+        ],),
+        Row(children: <Widget>[
+          FlatButton(
+            onPressed: () {
+              setState(() {
+                _isDeleted = true;
+              });
+            },
+            child: Text("DELETE", style: TextStyle(color: Colors.red),),
+          ),
+        ],),
       ],
     );
   }
