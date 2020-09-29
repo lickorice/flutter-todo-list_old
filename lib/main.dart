@@ -20,17 +20,17 @@ class _TodoListState extends State<TodoList> {
   void initState() {
     super.initState();
     _todoList = [
-      TodoListItem("Item 1", this._removeTodoListItem),
-      TodoListItem("Item 2", this._removeTodoListItem),
-      TodoListItem("Item 3", this._removeTodoListItem),
-      TodoListItem("Item 4", this._removeTodoListItem),
-      TodoListItem("Item 5", this._removeTodoListItem),
+      TodoListItem("Item 1", this._removeTodoListItem, Key("1")),
+      TodoListItem("Item 2", this._removeTodoListItem, Key("2")),
+      TodoListItem("Item 3", this._removeTodoListItem, Key("3")),
+      TodoListItem("Item 4", this._removeTodoListItem, Key("4")),
+      TodoListItem("Item 5", this._removeTodoListItem, Key("5")),
     ];
   }
 
   void _addTodoListItem() {
     setState(() {
-      _todoList.add(TodoListItem("Item " + (_todoList.length+1).toString(), this._removeTodoListItem));
+      _todoList.add(TodoListItem("Item " + (_todoList.length+1).toString(), this._removeTodoListItem, Key((_todoList.length+1).toString())));
     });
   }
 
@@ -43,7 +43,7 @@ class _TodoListState extends State<TodoList> {
 
   Widget _buildTodoList() {
     return new ListView.builder(
-      key: Key(_todoList.length.toString()),
+      // key: Key(_todoList.length.toString()),
       itemCount: _todoList.length,
       itemBuilder: (context, index) {
         return _todoList[index];
@@ -77,7 +77,7 @@ class _TodoListState extends State<TodoList> {
 class TodoListItem extends StatefulWidget {
   final String itemTitle;
   final Function(TodoListItem) removeItem;
-  TodoListItem(this.itemTitle, this.removeItem);
+  TodoListItem(this.itemTitle, this.removeItem, Key key) : super(key: key);
 
   @override
   _TodoListItemState createState() => _TodoListItemState(itemTitle, removeItem);
